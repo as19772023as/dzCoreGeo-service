@@ -76,15 +76,21 @@ class GeoServiceImplTest {
         assertThrows(RuntimeException.class, () -> geoService.byCoordinates(latitude, longitude));
     }
 
-//    @DisplayName("Тест на исключение-text")
-//    @Test
-//    void byCoordinatesExceptionText() {
-//        final var latitude = 0;
-//        final var longitude = 0;
-//
-//        GeoServiceImpl geoService = new GeoServiceImpl();
-//        final  var exception = geoService.byCoordinates(latitude, longitude);
-//
-//        assertEquals("Not implemented", exception);
-//    }
+
+    @DisplayName("Тест на исключение-текстОшибки")
+    @Test
+    void byCoordinatesExceptionText() {
+
+        final var latitude = 0;
+        final var longitude = 0;
+
+        GeoServiceImpl geoService = new GeoServiceImpl();
+
+        var actual = assertThrows(RuntimeException.class,
+                () -> {
+                    geoService.byCoordinates(latitude, longitude);
+                });
+
+        assertEquals("Not implemented", actual.getMessage());
+    }
 }

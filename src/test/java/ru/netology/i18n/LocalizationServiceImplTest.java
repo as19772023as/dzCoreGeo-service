@@ -9,13 +9,13 @@ import ru.netology.entity.Country;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LocalizationServiceImplTest {
-    private  static  LocalizationServiceImpl localizationService;
+    private static LocalizationServiceImpl localizationService;
 
     @BeforeAll
     static void setUp() {
 
         System.out.println("Начало теста");
-         localizationService = new LocalizationServiceImpl();
+        localizationService = new LocalizationServiceImpl();
     }
 
     @AfterEach
@@ -28,9 +28,9 @@ class LocalizationServiceImplTest {
     void localeTestRUS() {
         final var country = Country.RUSSIA;
 
-        final  var expected = "Добро пожаловать";
+        final var expected = "Добро пожаловать";
 
-        final  var actual = localizationService.locale(country);
+        final var actual = localizationService.locale(country);
 
         assertEquals(expected, actual);
 
@@ -41,9 +41,9 @@ class LocalizationServiceImplTest {
     void localeTestUsa() {
         final var country = Country.USA;
 
-        final  var expected = "Welcome";
+        final var expected = "Welcome";
 
-        final  var actual = localizationService.locale(country);
+        final var actual = localizationService.locale(country);
 
         assertEquals(expected, actual);
 
@@ -54,24 +54,36 @@ class LocalizationServiceImplTest {
     void localeTestBraz() {
         final var country = Country.BRAZIL;
 
-        final  var expected = "Welcome";
+        final var expected = "Welcome";
 
-        final  var actual = localizationService.locale(country);
+        final var actual = localizationService.locale(country);
 
         assertEquals(expected, actual);
 
     }
-//    @DisplayName("Тест на вывод англ. текста")
-//    @ParameterizedTest
-//    @EnumSource(Country.class)
-//    void localeTestUSA(Country country) {
-//       // final var country = Country.USA;
-//
-//        final  var expected = "Welcome";
-//
-//        final  var actual = localizationService.locale(country);
-//
-//        assertEquals(expected, actual);
-//
-//    }
+
+    @DisplayName("Тест на вывод англ. текста3")
+    @ParameterizedTest(name = "{index} {0} понимают английский язык")
+    @EnumSource(value = Country.class, names = {"USA", "GERMANY", "BRAZIL"})
+    void localeTestUSA(Country country) {
+
+        final var expected = "Welcome";
+        final var actual = localizationService.locale(country);
+
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("Тест на вывод англ. текста4 все кроме русского")
+    @ParameterizedTest
+    @EnumSource(value = Country.class,
+            names = {"RUSSIA"},
+            mode = EnumSource.Mode.EXCLUDE)
+    void localeTestRusExcept(Country country) {
+
+        final var expected = "Welcome";
+        final var actual = localizationService.locale(country);
+
+        assertEquals(expected, actual);
+    }
+
 }
